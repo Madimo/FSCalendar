@@ -20,6 +20,7 @@
 
 @interface FSCalendar (DataSourceAndDelegate)
 
+- (UIColor *)eventForegroundColorForDate:(NSDate *)date;
 - (UIColor *)eventBackgroundColorForDate:(NSDate *)date;
 - (NSString *)subtitleForDate:(NSDate *)date;
 
@@ -225,6 +226,7 @@
     cell.subtitleLabel.font   = _subtitleFont;
     cell.date                 = [self dateForIndexPath:indexPath];
     cell.subtitle             = [self subtitleForDate:cell.date];
+    cell.eventForegroundColor = [self eventForegroundColorForDate:cell.date];
     cell.eventBackgroundColor = [self eventBackgroundColorForDate:cell.date];
     [cell configureCell];
     return cell;
@@ -723,6 +725,14 @@
         return [_dataSource calendar:self subtitleForDate:date];
     }
     return nil;
+}
+
+- (UIColor *)eventForegroundColorForDate:(NSDate *)date
+{
+    if (_dataSource && [_dataSource respondsToSelector:@selector(calendar:eventForegroundColorForDate:)]) {
+        return [_dataSource calendar:self eventForegroundColorForDate:date];
+    }
+    return [UIColor clearColor];
 }
 
 - (UIColor *)eventBackgroundColorForDate:(NSDate *)date

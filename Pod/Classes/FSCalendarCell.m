@@ -142,6 +142,9 @@
     _backgroundLayer.path = _cellStyle == FSCalendarCellStyleCircle ?
     [UIBezierPath bezierPathWithOvalInRect:_backgroundLayer.bounds].CGPath :
     [UIBezierPath bezierPathWithRect:_backgroundLayer.bounds].CGPath;
+    if (_eventBackgroundColor) {
+        _titleLabel.textColor = _eventForegroundColor;
+    }
     _eventLayer.fillColor = _eventBackgroundColor.CGColor;
     _eventLayer.hidden = self.isPlaceholder;
 }

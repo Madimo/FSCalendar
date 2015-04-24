@@ -49,6 +49,14 @@
     return _lunarDate.dayString;
 }
 
+- (UIColor *)calendar:(FSCalendar *)calendar eventForegroundColorForDate:(NSDate *)date
+{
+    if (date.fs_day == 3) {
+        return [UIColor whiteColor];
+    }
+    return nil;
+}
+
 - (UIColor *)calendar:(FSCalendar *)calendar eventBackgroundColorForDate:(NSDate *)date
 {
     if (date.fs_day == 3) {
