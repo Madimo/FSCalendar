@@ -25,8 +25,8 @@
 @property (weak,   nonatomic) UILabel             *subtitleLabel;
 
 @property (assign, nonatomic) FSCalendarCellStyle cellStyle;
-@property (weak, nonatomic) UIColor               *eventForegroundColor;
-@property (weak, nonatomic) UIColor               *eventBackgroundColor;
+@property (strong, nonatomic) UIColor               *eventForegroundColor;
+@property (strong, nonatomic) UIColor               *eventBackgroundColor;
 
 @property (readonly, getter = isPlaceholder)      BOOL placeholder;
 
