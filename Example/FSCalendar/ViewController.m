@@ -49,9 +49,12 @@
     return _lunarDate.dayString;
 }
 
-- (BOOL)calendar:(FSCalendar *)calendarView hasEventForDate:(NSDate *)date
+- (UIColor *)calendar:(FSCalendar *)calendar eventBackgroundColorForDate:(NSDate *)date
 {
-    return date.fs_day == 3;
+    if (date.fs_day == 3) {
+        return [UIColor redColor];
+    }
+    return nil;
 }
 
 #pragma mark - FSCalendarDelegate
@@ -99,7 +102,6 @@
             {
                 [_calendar setWeekdayTextColor:kBlueText];
                 [_calendar setHeaderTitleColor:kBlueText];
-                [_calendar setEventColor:[kBlueText colorWithAlphaComponent:0.75]];
                 [_calendar setSelectionColor:kBlue];
                 [_calendar setHeaderDateFormat:@"MMMM yyyy"];
                 [_calendar setMinDissolvedAlpha:0.2];
@@ -111,7 +113,6 @@
             {
                 [_calendar setWeekdayTextColor:[UIColor redColor]];
                 [_calendar setHeaderTitleColor:[UIColor darkGrayColor]];
-                [_calendar setEventColor:[UIColor greenColor]];
                 [_calendar setSelectionColor:[UIColor blueColor]];
                 [_calendar setHeaderDateFormat:@"yyyy-MM"];
                 [_calendar setMinDissolvedAlpha:1.0];
@@ -123,7 +124,6 @@
             {
                 [_calendar setWeekdayTextColor:[UIColor redColor]];
                 [_calendar setHeaderTitleColor:[UIColor redColor]];
-                [_calendar setEventColor:[UIColor greenColor]];
                 [_calendar setSelectionColor:[UIColor blueColor]];
                 [_calendar setHeaderDateFormat:@"yyyy/MM"];
                 [_calendar setMinDissolvedAlpha:1.0];

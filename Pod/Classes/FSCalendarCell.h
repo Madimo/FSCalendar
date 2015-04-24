@@ -15,8 +15,6 @@
 @property (weak,   nonatomic) NSDictionary        *subtitleColors;
 @property (weak,   nonatomic) NSDictionary        *backgroundColors;
 
-@property (weak,   nonatomic) UIColor             *eventColor;
-
 @property (copy,   nonatomic) NSDate              *date;
 @property (copy,   nonatomic) NSDate              *month;
 @property (weak,   nonatomic) NSDate              *currentDate;
@@ -27,7 +25,7 @@
 @property (weak,   nonatomic) UILabel             *subtitleLabel;
 
 @property (assign, nonatomic) FSCalendarCellStyle cellStyle;
-@property (assign, nonatomic) BOOL                hasEvent;
+@property (weak, nonatomic) UIColor               *eventBackgroundColor;
 
 @property (readonly, getter = isPlaceholder)      BOOL placeholder;
 

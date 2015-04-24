@@ -48,7 +48,7 @@ typedef NS_OPTIONS(NSInteger, FSCalendarCellState) {
 @optional
 
 - (NSString *)calendar:(FSCalendar *)calendar subtitleForDate:(NSDate *)date;
-- (BOOL)calendar:(FSCalendar *)calendar hasEventForDate:(NSDate *)date;
+- (UIColor *)calendar:(FSCalendar *)calendar eventBackgroundColorForDate:(NSDate *)date;
 
 @end
 
@@ -72,7 +72,6 @@ typedef NS_OPTIONS(NSInteger, FSCalendarCellState) {
 @property (strong, nonatomic) UIFont   *titleFont                UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIFont   *subtitleFont             UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIFont   *weekdayFont              UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor  *eventColor               UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIColor  *weekdayTextColor         UI_APPEARANCE_SELECTOR;
 
 @property (strong, nonatomic) UIColor  *headerTitleColor         UI_APPEARANCE_SELECTOR;

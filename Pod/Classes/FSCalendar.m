@@ -20,7 +20,7 @@
 
 @interface FSCalendar (DataSourceAndDelegate)
 
-- (BOOL)hasEventForDate:(NSDate *)date;
+- (UIColor *)eventBackgroundColorForDate:(NSDate *)date;
 - (NSString *)subtitleForDate:(NSDate *)date;
 
 - (BOOL)shouldSelectDate:(NSDate *)date;
@@ -152,7 +152,6 @@
     _subtitleColors[@(FSCalendarCellStatePlaceholder)] = [UIColor lightGrayColor];
     _subtitleColors[@(FSCalendarCellStateToday)]       = [UIColor whiteColor];
 
-    _eventColor = [kBlue colorWithAlphaComponent:0.75];
     _cellStyle = FSCalendarCellStyleCircle;
     _autoAdjustTitleSize = YES;
     
@@ -216,18 +215,17 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     FSCalendarCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    cell.titleColors        = self.titleColors;
-    cell.subtitleColors     = self.subtitleColors;
-    cell.backgroundColors   = self.backgroundColors;
-    cell.eventColor         = self.eventColor;
-    cell.cellStyle          = self.cellStyle;
-    cell.month              = [_minimumDate fs_dateByAddingMonths:indexPath.section];
-    cell.currentDate        = self.currentDate;
-    cell.titleLabel.font    = _titleFont;
-    cell.subtitleLabel.font = _subtitleFont;
-    cell.date               = [self dateForIndexPath:indexPath];
-    cell.subtitle           = [self subtitleForDate:cell.date];
-    cell.hasEvent           = [self hasEventForDate:cell.date];
+    cell.titleColors          = self.titleColors;
+    cell.subtitleColors       = self.subtitleColors;
+    cell.backgroundColors     = self.backgroundColors;
+    cell.cellStyle            = self.cellStyle;
+    cell.month                = [_minimumDate fs_dateByAddingMonths:indexPath.section];
+    cell.currentDate          = self.currentDate;
+    cell.titleLabel.font      = _titleFont;
+    cell.subtitleLabel.font   = _subtitleFont;
+    cell.date                 = [self dateForIndexPath:indexPath];
+    cell.subtitle             = [self subtitleForDate:cell.date];
+    cell.eventBackgroundColor = [self eventBackgroundColorForDate:cell.date];
     [cell configureCell];
     return cell;
 }
@@ -590,14 +588,6 @@
     return _backgroundColors[@(FSCalendarCellStateToday)];
 }
 
-- (void)setEventColor:(UIColor *)eventColor
-{
-    if (![_eventColor isEqual:eventColor]) {
-        _eventColor = eventColor;
-        [self reloadData];
-    }
-}
-
 - (void)setTitleFont:(UIFont *)font
 {
     if (_titleFont != font) {
@@ -735,12 +725,12 @@
     return nil;
 }
 
-- (BOOL)hasEventForDate:(NSDate *)date
+- (UIColor *)eventBackgroundColorForDate:(NSDate *)date
 {
-    if (_dataSource && [_dataSource respondsToSelector:@selector(calendar:hasEventForDate:)]) {
-        return [_dataSource calendar:self hasEventForDate:date];
+    if (_dataSource && [_dataSource respondsToSelector:@selector(calendar:eventBackgroundColorForDate:)]) {
+        return [_dataSource calendar:self eventBackgroundColorForDate:date];
     }
-    return NO;
+    return [UIColor clearColor];
 }
 
 - (void)setAutoAdjustTitleSize:(BOOL)autoAdjustTitleSize

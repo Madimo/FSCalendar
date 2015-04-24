@@ -55,10 +55,9 @@
         
         _eventLayer = [CAShapeLayer layer];
         _eventLayer.backgroundColor = [UIColor clearColor].CGColor;
-        _eventLayer.fillColor = [UIColor cyanColor].CGColor;
+        _eventLayer.fillColor = [UIColor clearColor].CGColor;
         _eventLayer.path = [UIBezierPath bezierPathWithOvalInRect:_eventLayer.bounds].CGPath;
-        _eventLayer.hidden = YES;
-        [self.contentView.layer addSublayer:_eventLayer];
+        [self.contentView.layer insertSublayer:_eventLayer atIndex:0];
     }
     return self;
 }
@@ -66,15 +65,13 @@
 - (void)setBounds:(CGRect)bounds
 {
     [super setBounds:bounds];
-    CGFloat titleHeight = self.bounds.size.height*5.0/6.0;
-    CGFloat diameter = MIN(self.bounds.size.height*5.0/6.0,self.bounds.size.width);
-    _backgroundLayer.frame = CGRectMake((self.bounds.size.width-diameter)/2,
-                                        (titleHeight-diameter)/2,
+    CGFloat diameter = MIN(self.bounds.size.height, self.bounds.size.width) - 5.0;
+    _backgroundLayer.frame = CGRectMake((self.bounds.size.width  - diameter) / 2,
+                                        (self.bounds.size.height - diameter) / 2,
                                         diameter,
                                         diameter);
     
-    CGFloat eventSize = _backgroundLayer.frame.size.height/6.0;
-    _eventLayer.frame = CGRectMake((_backgroundLayer.frame.size.width-eventSize)/2+_backgroundLayer.frame.origin.x, CGRectGetMaxY(_backgroundLayer.frame)+eventSize*0.2, eventSize*0.8, eventSize*0.8);
+    _eventLayer.frame = _backgroundLayer.frame;
     _eventLayer.path = [UIBezierPath bezierPathWithOvalInRect:_eventLayer.bounds].CGPath;
 }
 
@@ -138,15 +135,15 @@
                                           self.fs_width,
                                           subtitleHeight);
     } else {
-        _titleLabel.frame = CGRectMake(0, 0, self.fs_width, floor(self.contentView.fs_height*5.0/6.0));
+        _titleLabel.frame = CGRectMake(0, 0, self.fs_width, self.contentView.fs_height);
         _subtitleLabel.hidden = YES;
     }
     _backgroundLayer.hidden = !self.selected && !self.isToday;
     _backgroundLayer.path = _cellStyle == FSCalendarCellStyleCircle ?
     [UIBezierPath bezierPathWithOvalInRect:_backgroundLayer.bounds].CGPath :
     [UIBezierPath bezierPathWithRect:_backgroundLayer.bounds].CGPath;
-    _eventLayer.fillColor = _eventColor.CGColor;
-    _eventLayer.hidden = !_hasEvent;
+    _eventLayer.fillColor = _eventBackgroundColor.CGColor;
+    _eventLayer.hidden = self.isPlaceholder;
 }
 
 - (BOOL)isPlaceholder
